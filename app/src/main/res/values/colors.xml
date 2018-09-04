@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorPrimaryDark">@color/violet</color>
+    <color name="colorAccent">@color/violet</color>
+    <color name="white">#FFFFFF</color>
+    <color name="violet">#4e4cc2</color>
+    <color name="sunny">#FFA726</color>
+    <color name="sunny_dark">#ac7119</color>
+    <color name="blue">#3751e1</color>
+    <color name="black">#000000</color>
+    <color name="grey">#cecece</color>
+
+
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding = "8dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/events_time"
+        android:text="«Жирона» "
+        />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/small_text"
+        android:text="«Жирона» в минувшем туре играла на выезде против «Севильи». Поединок был важен в плане шансов каталонского клуба вмешаться в распределение путевок в еврокубки. Как оказалось, пока еще «жиронцам» рановато на международную арену. Единственный точный удар «нервионцев» в конце первого тайма оказался победным.Поражение от «Севильи» прервало неплохую серию подопечных Пабло Мачина, на протяжении которой они сыграли на выезде вничью с мадридским «Атлетико» 1:1 и «Малагой» 0:0, а также одержали две домашние победы над «Лас-Пальмасом» 6:0 и «Атлетиком» Бильбао 2:0. В целом за шесть предыдущих домашних поединков «Жирона» уступила только «Алавесу» 2:3. В тоже время к выше указанным победам можно также добавить за этот период успех в матчах с мадридским «Реалом» 3:2 и «Хетафе» 1:0.В лазарете у каталонцев Хосе Аурелио Суарес, Пере Понс и Дуглас Луис."
+        />
+
+</LinearLayout>

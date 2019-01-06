@@ -1,10 +1,7 @@
 package com.example.android.sportsnews.api;
 
-import com.example.android.sportsnews.data.DetailedInfo;
-import com.example.android.sportsnews.data.Event;
-import com.example.android.sportsnews.data.EventsList;
-
-import java.util.List;
+import com.example.android.sportsnews.pojo.DetailedInfo;
+import com.example.android.sportsnews.pojo.EventsList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

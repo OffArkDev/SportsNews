@@ -1,4 +1,4 @@
-package com.example.android.sportsnews.data;
+package com.example.android.sportsnews.pojo;
 
 import com.google.gson.annotations.SerializedName;
 

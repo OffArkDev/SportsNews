@@ -19,8 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.sportsnews.R;
+import com.example.android.sportsnews.api.Categories;
 import com.example.android.sportsnews.api.RequestController;
-import com.example.android.sportsnews.data.EventsList;
+import com.example.android.sportsnews.pojo.EventsList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,10 +43,12 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        findViews();
+        setSupportActionBar(toolbar);
+        initAdapter();
+        initNavigationDrawer();
 
-        initViews();
-
-        downloadEvents("football");
+        downloadEvents(Categories.FOOTBALL);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,76 +60,76 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
         });
     }
 
-    public void downloadEvents(String category) {
-        listView.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        Call<EventsList> call = new RequestController().createRequest().getEvents(category);
-        call.enqueue(new Callback<EventsList>() {
-            @Override
-            public void onResponse(@NonNull Call<EventsList> call, @NonNull Response<EventsList> response) {
-                if (response.isSuccessful()) {
-                    listView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.INVISIBLE);
-
-                    events = response.body();
-                    adapter = new EventsAdapter(events, context);
-                    listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    listView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(EventsActivity.this, "Ошибка запроса", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<EventsList> call, @NonNull Throwable t) {
-                listView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(EventsActivity.this, "Ошибка подключения", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void initViews() {
+    public void findViews() {
         toolbar =  findViewById(R.id.toolbar);
         drawer =  findViewById(R.id.drawer_layout);
         progressBar = findViewById(R.id.progress_bar);
         navigationView =  findViewById(R.id.nav_view);
         listView = findViewById(R.id.list_view_events);
+    }
+
+    public void initAdapter() {
         adapter = new EventsAdapter(events, this);
         listView.setAdapter(adapter);
-        setSupportActionBar(toolbar);
+    }
+
+    public void initNavigationDrawer() {
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    public void downloadEvents(String category) {
+        showLoading();
+        Call<EventsList> call = new RequestController().createRequest().getEvents(category);
+        call.enqueue(new Callback<EventsList>() {
+            @Override
+            public void onResponse(@NonNull Call<EventsList> call, @NonNull Response<EventsList> response) {
+                if (response.isSuccessful()) {
+                    events = response.body();
+                    updateEventsView(events);
+
+                } else {
+                    Toast.makeText(EventsActivity.this, R.string.reqest_error, Toast.LENGTH_SHORT).show();
+                }
+                hideLoading();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<EventsList> call, @NonNull Throwable t) {
+                hideLoading();
+                Toast.makeText(EventsActivity.this, R.string.connect_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void updateEventsView(EventsList events) {
+        adapter = new EventsAdapter(events, context);
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_football) {
-            downloadEvents("football");
+            downloadEvents(Categories.FOOTBALL);
         } else if (id == R.id.nav_hockey) {
-            downloadEvents("hockey");
+            downloadEvents(Categories.HOCKEY);
         } else if (id == R.id.nav_tennis) {
-            downloadEvents("tennis");
+            downloadEvents(Categories.TENNIS);
         } else if (id == R.id.nav_basketball) {
-            downloadEvents("basketball");
+            downloadEvents(Categories.BASKETBALL);
         } else if (id == R.id.nav_volleyball) {
-            downloadEvents("volleyball");
+            downloadEvents(Categories.VOLLEYBALL);
         } else if (id == R.id.nav_cybersport) {
-            downloadEvents("cybersport");
+            downloadEvents(Categories.CYBERSPORT);
         }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -139,6 +142,16 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
         }
     }
 
+    public void showLoading() {
+        listView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoading() {
+        listView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
     private static final long TIME_INTERVAL_TO_EXIT = 2000;
     private long mLastTimeBackPressed;
 
@@ -147,7 +160,6 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
         if(pKeyCode == KeyEvent.KEYCODE_BACK
                 && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if(System.currentTimeMillis() - mLastTimeBackPressed < TIME_INTERVAL_TO_EXIT) {
-
                 moveTaskToBack(true);
                 finish();
                 System.runFinalization();
@@ -156,8 +168,7 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
             else {
                 mLastTimeBackPressed = System.currentTimeMillis();
 
-                Toast.makeText(this,"Нажмите ещё раз для выхода" ,Toast.LENGTH_LONG).show();
-
+                Toast.makeText(this,R.string.exite_message ,Toast.LENGTH_LONG).show();
             }
             return true;
         } else {

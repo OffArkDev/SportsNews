@@ -8,11 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.android.sportsnews.R;
-import com.example.android.sportsnews.data.Article;
-import com.example.android.sportsnews.data.Event;
-import com.example.android.sportsnews.data.EventsList;
+import com.example.android.sportsnews.pojo.Article;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleAdapter extends BaseAdapter {

@@ -113,7 +113,6 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

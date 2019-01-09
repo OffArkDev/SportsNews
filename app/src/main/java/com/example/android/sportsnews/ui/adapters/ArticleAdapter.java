@@ -1,4 +1,4 @@
-package com.example.android.sportsnews.ui;
+package com.example.android.sportsnews.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

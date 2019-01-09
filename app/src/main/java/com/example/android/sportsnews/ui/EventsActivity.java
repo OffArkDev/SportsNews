@@ -22,6 +22,7 @@ import com.example.android.sportsnews.R;
 import com.example.android.sportsnews.api.Categories;
 import com.example.android.sportsnews.api.RequestController;
 import com.example.android.sportsnews.pojo.EventsList;
+import com.example.android.sportsnews.ui.adapters.EventsAdapter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +84,7 @@ public class EventsActivity extends AppCompatActivity  implements NavigationView
 
     public void downloadEvents(String category) {
         showLoading();
-        Call<EventsList> call = new RequestController().createRequest().getEvents(category);
+        Call<EventsList> call = RequestController.getInstance().createRequest().getEvents(category);
         call.enqueue(new Callback<EventsList>() {
             @Override
             public void onResponse(@NonNull Call<EventsList> call, @NonNull Response<EventsList> response) {

@@ -17,6 +17,7 @@ import com.example.android.sportsnews.R;
 import com.example.android.sportsnews.api.RequestController;
 import com.example.android.sportsnews.pojo.Article;
 import com.example.android.sportsnews.pojo.DetailedInfo;
+import com.example.android.sportsnews.ui.adapters.ArticleAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,7 @@ public class InfoActivity extends AppCompatActivity {
     
     public void downloadData(String article) {
         showLoading();
-        Call<DetailedInfo> call = new RequestController().createRequest().getDetailedInfo(article);
+        Call<DetailedInfo> call = RequestController.getInstance().createRequest().getDetailedInfo(article);
         call.enqueue(new Callback<DetailedInfo>() {
             @Override
             public void onResponse(@NonNull Call<DetailedInfo> call, @NonNull Response<DetailedInfo> response) {

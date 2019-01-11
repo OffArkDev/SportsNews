@@ -5,7 +5,12 @@
 Однако код рабочий и можно убедиться что я использовал Retrofit на практике, хоть и в простом варианте.
 
 
-##MIT License
+
+
+
+
+
+## MIT License
 
 Copyright (c) [2019] [Offan Arkadiy Kazimirovich]
 
